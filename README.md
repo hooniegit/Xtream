@@ -22,21 +22,21 @@ HashMap<String, Object> 형태로 데이터를 관리 및 갱신해 범용성을
 @Getter
 public class Event01Handler extends Handler {
 	
-	/**
-	 * On Event Task
-	 */
-	@Override
+　　/**
+　　* On Event Task
+　　*/
+　　@Override
     protected void process(Event event) {
-		System.out.println(">> Event 01 Started");
+　　　　System.out.println(">> Event 01 Started");
 		
-		// Task Zone : 수행할 작업을 정의합니다.
-    System.out.println("[Received] " + (String) event.getData().get("id"));
+　　　　// Task Zone : 수행할 작업을 정의합니다.
+　　　　System.out.println("[Received] " + (String) event.getData().get("id"));
 
-    // Share Zone : 이벤트를　갱신합니다．
-    HashMap<String, Object> share = new HashMap<>();
-    share.put("id", "HOONIEGIT");
-    share.put("email", (String) event.getData().get("email"));
-    event.setData(share);
-    }
+　　　　// Share Zone : 이벤트를　갱신합니다．
+　　　　HashMap<String, Object> share = new HashMap<>();
+　　　　share.put("id", "HOONIEGIT");
+　　　　share.put("email", (String) event.getData().get("email"));
+　　　　event.setData(share);
+　　}
 }
 ```
