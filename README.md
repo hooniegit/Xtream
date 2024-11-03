@@ -40,3 +40,26 @@ public class Event01Handler extends Handler {
 　　}
 }
 ```
+<br>
+
+2. Configuration 구성
+``` java
+@Configuration
+public class StreamConfiguration {
+
+    ...
+	
+    @Bean
+    public StreamBuilder streamBuilder() {
+    	// ** NEED TO DEFINE YOUR OWN HANDLER & ADD **
+        Handler handler1 = new Event01Handler();
+        Handler handler2 = new Event02Handler();
+        
+        return new StreamBuilder(List.of(handler1, handler2));
+    }
+
+    ...
+
+}
+
+```
