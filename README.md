@@ -63,3 +63,32 @@ public class StreamConfiguration {
 }
 
 ```
+<br>
+
+3. Service 또는 외부 클래스에서 이벤트 발행
+
+``` java
+@Service
+public class SampleService {
+
+    private final StreamManager streamManager;
+
+    @Autowired　// Bean 환경에 등록된 StreamManager 호출
+    public SampleService(StreamManager streamManager) {
+        this.streamManager = streamManager;
+    }
+
+    public void processEvent() {
+        Stream stream = streamManager.getNextStream();
+
+        // 1. Set Initial Map Data
+        HashMap<String, Object> initialData = new HashMap<>();
+        initialData.put("id", "hooniegit");
+        initialData.put("email", "neivekim76@gmail.com");
+        
+        // 2. Publish Event
+        stream.publishInitialEvent(initialData);
+    }
+}
+
+```
