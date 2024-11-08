@@ -1,6 +1,7 @@
 package com.hooniegit.Xtream.Stream;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,8 @@ import lombok.Setter;
 @Getter @Setter
 public class Event {
 	private HashMap<String, Object> data;
-
+	private ConcurrentHashMap<String, Object> concurrentData;
+	
 	/**
 	 * Return Data Object Map (Only for Async Tasks)
 	 * @return Data Object Map
