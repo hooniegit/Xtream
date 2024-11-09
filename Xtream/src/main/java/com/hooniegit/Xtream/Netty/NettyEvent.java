@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Ztream;
+package com.hooniegit.Xtream.Netty;
 
 public class NettyEvent {
     private String message;

@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Ztream;
+package com.hooniegit.Xtream.Netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;

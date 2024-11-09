@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Ztream;
+package com.hooniegit.Xtream.Netty;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.springframework.stereotype.Service;
