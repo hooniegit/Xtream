@@ -81,7 +81,6 @@ public class Serialization {
                 return (T) ois.readObject(); // Not Checking Type Safety
             }
         } finally {
-            // 버퍼를 반환할 때 초기화 후 반환
             byteBufPool.returnObject(buffer);
         }
     }
