@@ -1,10 +1,17 @@
-package com.hooniegit.Xtream.Netty.Modules;
+package com.hooniegit.Xtream.Modules.Serialization;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
 import java.io.Serializable;
 
+/**
+ * Data Serialization Class
+ * 
+ * <Usage>
+ * - Serialize T To Byte[]
+ * - De-Serialize Byte[] To T
+ */
 public class ByteSerialization extends KryoSerialization {
 
     /**

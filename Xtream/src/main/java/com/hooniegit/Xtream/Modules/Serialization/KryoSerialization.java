@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Netty.Modules;
+package com.hooniegit.Xtream.Modules.Serialization;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -16,6 +16,16 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Data Serialization Class
+ * - Kryo: For Rapid Data Serialization
+ * - Netty: For Buffering
+ * - Pool2: For Instance Re-Using
+ * 
+ * <Usage>
+ * - Serialize T To ByteBuf
+ * - De-Serialize ByteBuf To T
+ */
 public class KryoSerialization {
 
     private final ObjectPool<Kryo> kryoPool;
@@ -39,7 +49,7 @@ public class KryoSerialization {
     public <T> ByteBuf serialize(T object) throws Exception {
         Kryo kryo = kryoPool.borrowObject();
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             Output output = new Output(baos)) {
+            Output output = new Output(baos)) {
             kryo.writeClassAndObject(output, object);
             output.close();
             byte[] bytes = baos.toByteArray();
