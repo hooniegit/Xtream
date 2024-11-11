@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * Data Serialization Class
- * 
+ *
  * <Usage>
  * - Serialize T To Byte[]
  * - De-Serialize Byte[] To T
@@ -21,8 +21,8 @@ public class ByteSerialization extends KryoSerialization {
      * @return
      * @throws Exception
      */
-    public <T extends Serializable> byte[] serializeToBytes(T object) throws Exception {
-        ByteBuf buffer = serialize(object);
+    public <T extends Serializable> byte[] serializeToBytes(T object, Class<T> clazz) throws Exception {
+        ByteBuf buffer = serialize(object, clazz);
         try {
             int length = buffer.readableBytes();
             byte[] byteArray = new byte[length];
@@ -40,8 +40,8 @@ public class ByteSerialization extends KryoSerialization {
      * @return
      * @throws Exception
      */
-    public <T> T deserializeFromBytes(byte[] byteArray) throws Exception {
+    public <T> T deserializeFromBytes(byte[] byteArray, Class<T> clazz) throws Exception {
         ByteBuf buffer = Unpooled.wrappedBuffer(byteArray);
-        return deserialize(buffer);
+        return deserialize(buffer, clazz);
     }
 }

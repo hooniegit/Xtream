@@ -3,6 +3,7 @@ package com.hooniegit.Xtream.Modules.Serialization;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
@@ -32,11 +33,12 @@ public class KryoSerialization {
 
     public KryoSerialization() {
         GenericObjectPoolConfig<Kryo> config = new GenericObjectPoolConfig<>();
-        config.setMaxTotal(10); 
+        config.setMaxTotal(10);
         kryoPool = new GenericObjectPool<>(new BasePooledObjectFactory<Kryo>() {
             @Override
             public Kryo create() {
-                return new Kryo();
+                Kryo kryo = new Kryo();
+                return kryo;
             }
 
             @Override
@@ -46,10 +48,12 @@ public class KryoSerialization {
         }, config);
     }
 
-    public <T> ByteBuf serialize(T object) throws Exception {
+    public <T> ByteBuf serialize(T object, Class<T> clazz) throws Exception {
         Kryo kryo = kryoPool.borrowObject();
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Output output = new Output(baos)) {
+            kryo.register(clazz);
+            kryo.setReferences(false);
             kryo.writeClassAndObject(output, object);
             output.close();
             byte[] bytes = baos.toByteArray();
@@ -61,17 +65,26 @@ public class KryoSerialization {
         }
     }
 
-    public <T> T deserialize(ByteBuf buffer) throws Exception {
-        byte[] bytes = new byte[buffer.readableBytes()];
-        buffer.readBytes(bytes);
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-             Input input = new Input(bais)) {
-            Kryo kryo = kryoPool.borrowObject();
-            try {
-                return (T) kryo.readClassAndObject(input);
-            } finally {
-                kryoPool.returnObject(kryo);
+        public <T> T deserialize(ByteBuf buffer, Class<T> clazz) throws Exception {
+            byte[] bytes = new byte[buffer.readableBytes()];
+            buffer.readBytes(bytes);
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+                Input input = new Input(bais)) {
+                Kryo kryo = kryoPool.borrowObject();
+                try {
+                    // Check Registration
+                    if (kryo.getRegistration(clazz) == null) {
+                        System.out.println("Will REGISTER");
+                        kryo.register(clazz);
+                    } else {
+                        System.out.println("Already Registered");
+                    }
+    
+                    // Deserialize the object using the provided class type
+                    return kryo.readObject(input, clazz);
+                } finally {
+                    kryoPool.returnObject(kryo);
+                }
             }
         }
     }
-}

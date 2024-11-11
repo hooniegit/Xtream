@@ -1,5 +1,6 @@
 package com.hooniegit.Xtream.Modules.Stream;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,9 @@ public class Processor {
 
                         // Get Instance From Pool & Set Datas
                         Two two = this.returnPool.borrowObject();
-                        two.setName(byteBuf1.toString());
+                        byte[] nameBytes = new byte[byteBuf1.readableBytes()];
+                        byteBuf1.readBytes(nameBytes);
+                        two.setName(new String(nameBytes, StandardCharsets.UTF_8));
                         two.setAge(byteBuf2.readInt());
 
                         return two;
@@ -49,7 +52,7 @@ public class Processor {
                         e.printStackTrace();
                         return null;
                     } finally {
-                        // Initialize
+                        // Initialize 
                         byteBuf1.release();
                         byteBuf2.release();
                     }
@@ -58,7 +61,12 @@ public class Processor {
     }
 
     public void returnObjectsToPool(List<Two> processedList) {
-        processedList.forEach(returnPool::returnObject);
+        processedList.forEach(this.returnPool::returnObject);
     }
+
+    public Two getObjectFromPool() throws Exception {
+        return this.returnPool.borrowObject();
+    }
+
 
 }
