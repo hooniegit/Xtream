@@ -65,26 +65,26 @@ public class KryoSerialization {
         }
     }
 
-        public <T> T deserialize(ByteBuf buffer, Class<T> clazz) throws Exception {
-            byte[] bytes = new byte[buffer.readableBytes()];
-            buffer.readBytes(bytes);
-            try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-                Input input = new Input(bais)) {
-                Kryo kryo = kryoPool.borrowObject();
-                try {
-                    // Check Registration
-                    if (kryo.getRegistration(clazz) == null) {
-                        System.out.println("Will REGISTER");
-                        kryo.register(clazz);
-                    } else {
-                        System.out.println("Already Registered");
-                    }
-    
-                    // Deserialize the object using the provided class type
-                    return kryo.readObject(input, clazz);
-                } finally {
-                    kryoPool.returnObject(kryo);
+    public <T> T deserialize(ByteBuf buffer, Class<T> clazz) throws Exception {
+        byte[] bytes = new byte[buffer.readableBytes()];
+        buffer.readBytes(bytes);
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            Input input = new Input(bais)) {
+            Kryo kryo = kryoPool.borrowObject();
+            try {
+                // Check Registration
+                if (kryo.getRegistration(clazz) == null) {
+                    kryo.register(clazz);
+                } else {
                 }
+    
+                // Deserialize the object using the provided class type
+                return (T) kryo.readClassAndObject(input);
+            } finally {
+                kryoPool.returnObject(kryo);
             }
         }
     }
+
+
+}

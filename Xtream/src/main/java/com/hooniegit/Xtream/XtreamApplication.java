@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.hooniegit.Xtream.Modules.Serialization.ByteSerialization;
 import com.hooniegit.Xtream.Modules.Stream.Processor;
 import com.hooniegit.Xtream.Modules.Stream.Sample.One;
+import com.hooniegit.Xtream.Modules.Stream.Sample.SampleClass;
 import com.hooniegit.Xtream.Modules.Stream.Sample.Two;
 
 @SpringBootApplication
@@ -16,24 +17,31 @@ public class XtreamApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(XtreamApplication.class, args);
-		// workspace_serialize();
+
 		workspace_stream();
 		workspace_serialize();
 	}
 
 	private static void workspace_serialize() {
 		ByteSerialization serialization = new ByteSerialization();
-		One sampleOne = new One("Hooniegit", Integer.valueOf(10));
+		SampleClass sample = new SampleClass("Hooniegit", "neivekim76@gmail.com");
+		One sampleOne = new One("Hooniegit", 29);
+
 		try {
-			byte[] sampleByte = serialization.serializeToBytes(sampleOne, One.class);
-			One refactored = serialization.deserializeFromBytes(sampleByte, One.class);
-			System.out.println(refactored.getName() + ":" + refactored.getAge());
+			byte[] sampleByte = serialization.serializeToBytes(sample, SampleClass.class);
+			SampleClass refactored = serialization.<SampleClass>deserializeFromBytes(sampleByte, SampleClass.class);
+			System.out.println(">>" + refactored.getName() + "<<");
+			System.out.println(">>" + refactored.getEmail() + "<<");
+
+			byte[] sampleByteOne = serialization.serializeToBytes(sampleOne, One.class);
+			One refactoredOne = serialization.<One>deserializeFromBytes(sampleByteOne, One.class);
+			System.out.println(">>" + refactoredOne.getName() + "<<");
+			System.out.println(">>" + refactoredOne.getAge() + "<<");
+
 		} catch (Exception ex) {
-			System.out.println(ex);
 			ex.printStackTrace();
+			System.out.println(ex);
 		}
-
-
 	}
 
 	private static void workspace_stream() {
