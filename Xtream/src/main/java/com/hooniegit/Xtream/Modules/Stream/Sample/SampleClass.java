@@ -10,6 +10,7 @@ import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class SampleClass implements Serializable {
+    private List<String> list;
     private String name;
     private String email;
 }

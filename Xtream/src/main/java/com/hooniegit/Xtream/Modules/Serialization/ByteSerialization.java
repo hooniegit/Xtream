@@ -40,8 +40,8 @@ public class ByteSerialization extends KryoSerialization {
      * @return
      * @throws Exception
      */
-    public <T> T deserializeFromBytes(byte[] byteArray, Class<T> clazz) throws Exception {
+    public <T> T deserializeFromBytes(byte[] byteArray) throws Exception {
         ByteBuf buffer = Unpooled.wrappedBuffer(byteArray);
-        return deserialize(buffer, clazz);
+        return deserialize(buffer);
     }
 }

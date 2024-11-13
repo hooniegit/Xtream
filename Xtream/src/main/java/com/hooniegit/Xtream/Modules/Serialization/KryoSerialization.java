@@ -38,6 +38,7 @@ public class KryoSerialization {
             @Override
             public Kryo create() {
                 Kryo kryo = new Kryo();
+                kryo.setRegistrationRequired(false);
                 return kryo;
             }
 
@@ -65,19 +66,13 @@ public class KryoSerialization {
         }
     }
 
-    public <T> T deserialize(ByteBuf buffer, Class<T> clazz) throws Exception {
+    public <T> T deserialize(ByteBuf buffer) throws Exception {
         byte[] bytes = new byte[buffer.readableBytes()];
         buffer.readBytes(bytes);
         try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
             Input input = new Input(bais)) {
             Kryo kryo = kryoPool.borrowObject();
             try {
-                // Check Registration
-                if (kryo.getRegistration(clazz) == null) {
-                    kryo.register(clazz);
-                } else {
-                }
-    
                 // Deserialize the object using the provided class type
                 return (T) kryo.readClassAndObject(input);
             } finally {

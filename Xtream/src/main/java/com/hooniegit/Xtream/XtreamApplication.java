@@ -24,17 +24,17 @@ public class XtreamApplication {
 
 	private static void workspace_serialize() {
 		ByteSerialization serialization = new ByteSerialization();
-		SampleClass sample = new SampleClass("Hooniegit", "neivekim76@gmail.com");
+		SampleClass sample = new SampleClass(new ArrayList<>(), "Hooniegit", "neivekim76@gmail.com");
 		One sampleOne = new One("Hooniegit", 29);
 
 		try {
 			byte[] sampleByte = serialization.serializeToBytes(sample, SampleClass.class);
-			SampleClass refactored = serialization.<SampleClass>deserializeFromBytes(sampleByte, SampleClass.class);
+			SampleClass refactored = serialization.<SampleClass>deserializeFromBytes(sampleByte);
 			System.out.println(">>" + refactored.getName() + "<<");
 			System.out.println(">>" + refactored.getEmail() + "<<");
 
 			byte[] sampleByteOne = serialization.serializeToBytes(sampleOne, One.class);
-			One refactoredOne = serialization.<One>deserializeFromBytes(sampleByteOne, One.class);
+			One refactoredOne = serialization.<One>deserializeFromBytes(sampleByteOne);
 			System.out.println(">>" + refactoredOne.getName() + "<<");
 			System.out.println(">>" + refactoredOne.getAge() + "<<");
 

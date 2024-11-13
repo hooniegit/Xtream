@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Stream.Configuration;
+package com.hooniegit.Xtream.Stream.EventTwo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.hooniegit.Xtream.Stream.Handler;
-import com.hooniegit.Xtream.Stream.Stream;
 import com.hooniegit.Xtream.Stream.StreamBuilder;
 import com.hooniegit.Xtream.Stream.StreamManager;
-import com.hooniegit.Xtream.Stream.Handlers.Event01Handler;
-import com.hooniegit.Xtream.Stream.Handlers.Event02Handler;
+import com.hooniegit.Xtream.Stream.Configuration.Stream;
 
 /**
  * LMAX Stream Configuration On Spring
  */
 @Configuration
-public class StreamConfiguration {
+public class StreamConfigurationTwo {
 	
     @Value("${LMAX.stream.size}") // Defined At Application.yml
     private int streamSize;
@@ -30,10 +28,9 @@ public class StreamConfiguration {
     @Bean
     public StreamBuilder streamBuilder() {
     	// ** NEED TO DEFINE YOUR OWN HANDLER & ADD **
-        Handler handler1 = new Event01Handler();
-        Handler handler2 = new Event02Handler();
+        Handler handler1 = new HandlerTwo();
         
-        return new StreamBuilder(List.of(handler1, handler2));
+        return new StreamBuilder(List.of(handler1));
     }
 
     /**
@@ -56,8 +53,9 @@ public class StreamConfiguration {
      * @param streamList
      * @return
      */
-    @Bean
+    @Bean(name = "StreamManagerTwo")
     public StreamManager streamManager(List<Stream> streamList) {
         return new StreamManager(streamList);
     }
 }
+
