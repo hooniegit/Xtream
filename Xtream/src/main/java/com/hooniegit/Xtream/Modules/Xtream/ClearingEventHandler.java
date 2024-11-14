@@ -1,6 +1,6 @@
-package com.hooniegit.Xtream.Stream;
+package com.hooniegit.Xtream.Modules.Xtream;
 
-import com.hooniegit.Xtream.Stream.Configuration.Event;
+import com.hooniegit.Xtream.Modules.Xtream.Configuration.Event;
 
 /**
  * Clear Event Properties

@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Stream.EventTwo;
+package com.hooniegit.Xtream.Modules.Xtream.EventOne;
 
 import java.util.List;
 
@@ -7,6 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor
-public class DataTwo {
+public class DataOne {
     private List<String> list;
 }

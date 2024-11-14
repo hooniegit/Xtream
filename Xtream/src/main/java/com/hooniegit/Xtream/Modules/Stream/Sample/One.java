@@ -11,9 +11,4 @@ import lombok.Setter;
 public class One implements Serializable {
     private String name;
     private Integer age;
-
-    @Override
-    public String toString() {
-        return "One{name:" + name + ", age:" + age + "}";
-    }
 }

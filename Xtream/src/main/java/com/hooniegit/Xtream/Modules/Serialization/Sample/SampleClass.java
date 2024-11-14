@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Modules.Stream.Sample;
+package com.hooniegit.Xtream.Modules.Serialization.Sample;
 
 import java.io.Serializable;
 import java.util.List;

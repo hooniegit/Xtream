@@ -1,10 +1,10 @@
-package com.hooniegit.Xtream.Stream.Configuration;
+package com.hooniegit.Xtream.Modules.Xtream.Configuration;
 
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.hooniegit.Xtream.Stream.EventOne.DataOne;
-import com.hooniegit.Xtream.Stream.EventTwo.DataTwo;
+import com.hooniegit.Xtream.Modules.Xtream.EventOne.DataOne;
+import com.hooniegit.Xtream.Modules.Xtream.EventTwo.DataTwo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,10 +1,10 @@
-package com.hooniegit.Xtream.Stream.EventOne;
+package com.hooniegit.Xtream.Modules.Xtream.EventOne;
 
 import java.util.HashMap;
 import java.util.List;
 
-import com.hooniegit.Xtream.Stream.Handler;
-import com.hooniegit.Xtream.Stream.Configuration.Event;
+import com.hooniegit.Xtream.Modules.Xtream.Handler;
+import com.hooniegit.Xtream.Modules.Xtream.Configuration.Event;
 
 import lombok.Getter;
 

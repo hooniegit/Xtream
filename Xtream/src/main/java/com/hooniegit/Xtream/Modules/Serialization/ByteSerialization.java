@@ -34,6 +34,25 @@ public class ByteSerialization extends KryoSerialization {
     }
 
     /**
+     * Serialize T To Byte[]
+     * @param <T>
+     * @param object
+     * @return
+     * @throws Exception
+     */
+    public <T extends Serializable> byte[] serializeToBytes(T object) throws Exception {
+        ByteBuf buffer = serialize(object);
+        try {
+            int length = buffer.readableBytes();
+            byte[] byteArray = new byte[length];
+            buffer.readBytes(byteArray);
+            return byteArray;
+        } finally {
+            buffer.release();
+        }
+    }
+
+    /**
      * De-Serialize byte[] To T
      * @param <T>
      * @param byteArray

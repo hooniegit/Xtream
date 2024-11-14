@@ -1,16 +1,15 @@
-package com.hooniegit.Xtream.Stream.Configuration;
+package com.hooniegit.Xtream.Modules.Xtream.Configuration;
 
-import com.hooniegit.Xtream.Stream.ClearingEventHandler;
-import com.hooniegit.Xtream.Stream.Handler;
-import com.hooniegit.Xtream.Stream.EventOne.DataOne;
-import com.hooniegit.Xtream.Stream.EventTwo.DataTwo;
+import com.hooniegit.Xtream.Modules.Xtream.ClearingEventHandler;
+import com.hooniegit.Xtream.Modules.Xtream.Handler;
+import com.hooniegit.Xtream.Modules.Xtream.EventOne.DataOne;
+import com.hooniegit.Xtream.Modules.Xtream.EventTwo.DataTwo;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.SleepingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import com.lmax.disruptor.util.DaemonThreadFactory;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

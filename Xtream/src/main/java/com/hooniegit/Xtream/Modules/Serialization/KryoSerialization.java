@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream;
  * - Kryo: For Rapid Data Serialization
  * - Netty: For Buffering
  * - Pool2: For Instance Re-Using
- * 
+ *
  * <Usage>
  * - Serialize T To ByteBuf
  * - De-Serialize ByteBuf To T
@@ -49,6 +49,37 @@ public class KryoSerialization {
         }, config);
     }
 
+    /**
+     * Serialize T Data To ByteBuf
+     * @param <T>
+     * @param object
+     * @return
+     * @throws Exception
+     */
+    public <T> ByteBuf serialize(T object) throws Exception {
+        Kryo kryo = kryoPool.borrowObject();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Output output = new Output(baos)) {
+            kryo.setReferences(false);
+            kryo.writeClassAndObject(output, object);
+            output.close();
+            byte[] bytes = baos.toByteArray();
+            ByteBuf buffer = Unpooled.buffer(bytes.length);
+            buffer.writeBytes(bytes);
+            return buffer;
+        } finally {
+            kryoPool.returnObject(kryo);
+        }
+    }
+
+    /**
+     * Serialize T Data To ByteBuf
+     * @param <T>
+     * @param object
+     * @param clazz
+     * @return
+     * @throws Exception
+     */
     public <T> ByteBuf serialize(T object, Class<T> clazz) throws Exception {
         Kryo kryo = kryoPool.borrowObject();
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -66,6 +97,13 @@ public class KryoSerialization {
         }
     }
 
+    /**
+     * De-Serialize ByteBuf Data To T
+     * @param <T>
+     * @param buffer
+     * @return
+     * @throws Exception
+     */
     public <T> T deserialize(ByteBuf buffer) throws Exception {
         byte[] bytes = new byte[buffer.readableBytes()];
         buffer.readBytes(bytes);

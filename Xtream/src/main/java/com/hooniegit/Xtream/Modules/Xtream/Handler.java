@@ -1,6 +1,6 @@
-package com.hooniegit.Xtream.Stream;
+package com.hooniegit.Xtream.Modules.Xtream;
 
-import com.hooniegit.Xtream.Stream.Configuration.Event;
+import com.hooniegit.Xtream.Modules.Xtream.Configuration.Event;
 import com.lmax.disruptor.EventHandler;
 
 import lombok.Getter;

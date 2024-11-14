@@ -1,9 +1,9 @@
-package com.hooniegit.Xtream.Stream;
+package com.hooniegit.Xtream.Modules.Xtream;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.hooniegit.Xtream.Stream.Configuration.Stream;
+import com.hooniegit.Xtream.Modules.Xtream.Configuration.Stream;
 
 /**
  * Manage List<Stream> For Multi-Thread LMAX Usage

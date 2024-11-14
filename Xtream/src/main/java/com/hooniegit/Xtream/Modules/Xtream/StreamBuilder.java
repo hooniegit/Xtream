@@ -1,8 +1,8 @@
-package com.hooniegit.Xtream.Stream;
+package com.hooniegit.Xtream.Modules.Xtream;
 
 import java.util.List;
 
-import com.hooniegit.Xtream.Stream.Configuration.Stream;
+import com.hooniegit.Xtream.Modules.Xtream.Configuration.Stream;
 
 /**
  * Build Stream Based On List<Handlers>
