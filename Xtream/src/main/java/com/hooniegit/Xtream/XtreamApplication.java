@@ -2,13 +2,12 @@ package com.hooniegit.Xtream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.hooniegit.Xtream.Modules.Data.Data;
-import com.hooniegit.Xtream.Modules.Data.KryoData;
-import com.hooniegit.Xtream.Modules.Data.SupData;
 import com.hooniegit.Xtream.Modules.Data.Type;
 import com.hooniegit.Xtream.Modules.Serialization.ByteSerialization;
 import com.hooniegit.Xtream.Modules.Serialization.Sample.SampleClass;
@@ -25,9 +24,7 @@ public class XtreamApplication {
 		SpringApplication.run(XtreamApplication.class, args);
 
 		workspace_data();
-		workspace_supData();
-		workspace_kryoData();
-		// workspace_stream();
+		workspace_stream();
 		// workspace_serialize();
 	}
 
@@ -49,64 +46,11 @@ public class XtreamApplication {
 
 		// Read Data & Check
 		recorder.put();
-		// List<String> rList = data.get(Type.ONE);
 		List<String> rList = data.get(Type.ONE);
 		recorder.put();
 
-		System.out.println("[Data Set Time Spent] : " + recorder.measure(0, 1, 1) + " ns, " + recorder.measure(0, 1, 1000) + " ms");
-		System.out.println("[Data Get Time Spent] : " + recorder.measure(2, 3, 1) + " ns, " + recorder.measure(2, 3, 1000) + " ms");
-		recorder.clear();
-	}
-
-	/**
-	 * <Data Test>
-	 */
-	private static void workspace_supData() {
-		// Define Data
-		SupData data = new SupData();
-
-		// Add Data
-		recorder.put();
-		List<String> sList = new ArrayList<>();
-		for (int i=1; i<=3000; i++) {
-			sList.add("Hello, World!");
-		}
-		data.set(Type.ONE, sList);
-		recorder.put();
-
-		// Read Data & Check
-		recorder.put();
-		List<String> rList = data.get(Type.ONE);
-		recorder.put();
-
-		System.out.println("[SupData Set Time Spent] : " + recorder.measure(0, 1, 1) + " ns, " + recorder.measure(0, 1, 1000) + " ms");
-		System.out.println("[SupData Get Time Spent] : " + recorder.measure(2, 3, 1) + " ns, " + recorder.measure(2, 3, 1000) + " ms");
-		recorder.clear();
-	}
-
-	/**
-	 * <Data Test>
-	 */
-	private static void workspace_kryoData() {
-		// Define Data
-		KryoData data = new KryoData();
-
-		// Add Data
-		recorder.put();
-		List<String> sList = new ArrayList<>();
-		for (int i=1; i<=3000; i++) {
-			sList.add("Hello, World!");
-		}
-		data.set(Type.ONE, sList);
-		recorder.put();
-
-		// Read Data & Check
-		recorder.put();
-		List<String> rList = data.get(Type.ONE);
-		recorder.put();
-
-		System.out.println("[KryoData Set Time Spent] : " + recorder.measure(0, 1, 1) + " ns, " + recorder.measure(0, 1, 1000) + " ms");
-		System.out.println("[KryoData Get Time Spent] : " + recorder.measure(2, 3, 1) + " ns, " + recorder.measure(2, 3, 1000) + " ms");
+		System.out.println("[Data Set Time Spent] : " + recorder.measure(0, 1, 1) + " ns, " + recorder.measure(0, 1, 1000000) + " ms");
+		System.out.println("[Data Get Time Spent] : " + recorder.measure(2, 3, 1) + " ns, " + recorder.measure(2, 3, 1000000) + " ms");
 		recorder.clear();
 	}
 
@@ -138,7 +82,7 @@ public class XtreamApplication {
 		Processor processor = new Processor();
 		// Create Sample List
 		List<One> oneList = new ArrayList<>();
-		for (int i=0; i<100; i++) {
+		for (int i=0; i<1000000; i++) {
 			if (i%2 == 0) {
 				oneList.add(new One("Hooniegit", 2));
 			} else {
@@ -146,10 +90,28 @@ public class XtreamApplication {
 			}
 		}
 		// Process List & Check
+		recorder.put();
 		List<Two> twoList = processor.processList(oneList);
-		for (Two two : twoList) {
-			System.out.println(two.getName() + ":" + two.getAge());
-		}
+		recorder.put();
+
+		recorder.put();
+		List<Two> twoListDefault = oneList.stream()
+            .map(one -> new Two(one.getName(), one.getAge())) // One -> Two로 매핑
+            .collect(Collectors.toList());
+		recorder.put();
+
+		recorder.put();
+		List<Two> twoListParallel = oneList.parallelStream()
+            .map(one -> new Two(one.getName(), one.getAge())) // One -> Two로 매핑
+            .collect(Collectors.toList());
+		recorder.put();
+
+
+
+		System.out.println("[Stream Process Time Spent] : " + recorder.measure(0, 1, 1) + " ns, " + recorder.measure(0, 1, 1000000) + " ms");
+		System.out.println("[Stream Time Spent] : " + recorder.measure(2, 3, 1) + " ns, " + recorder.measure(2, 3, 1000000) + " ms");
+		System.out.println("[Parallel Stream Time Spent] : " + recorder.measure(4, 5, 1) + " ns, " + recorder.measure(4, 5, 1000000) + " ms");
+		recorder.clear();
 
 	}
 

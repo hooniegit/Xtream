@@ -14,10 +14,6 @@ public class Data {
     public <T> T get(Type type) {
         return (T) map.get(type);
     }
-
-    public <T> T get(Type type, Class<T> clazz) {
-        return clazz.cast(map.get(type));
-    }
     
     /**
      * Set EnumMap Data

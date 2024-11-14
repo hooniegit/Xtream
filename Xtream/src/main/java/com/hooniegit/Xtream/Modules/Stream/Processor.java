@@ -19,7 +19,7 @@ public class Processor {
 
     public Processor() {
         GenericObjectPoolConfig<Two> poolConfig = new GenericObjectPoolConfig<>();
-        poolConfig.setMaxTotal(100); // Max Pool Size
+        poolConfig.setMaxTotal(100000000); // Max Pool Size
         this.returnPool = new GenericObjectPool<>(new Factory(), poolConfig);
         this.allocator = ByteBufAllocator.DEFAULT;
     }
@@ -46,7 +46,6 @@ public class Processor {
                         byteBuf1.readBytes(nameBytes);
                         two.setName(new String(nameBytes, StandardCharsets.UTF_8));
                         two.setAge(byteBuf2.readInt());
-
                         return two;
                     } catch (Exception e) {
                         e.printStackTrace();
