@@ -1,35 +1,34 @@
 package com.hooniegit.Xtream.Modules.Xtream.Configuration;
 
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.EnumMap;
 
-import com.hooniegit.Xtream.Modules.Xtream.EventOne.DataOne;
-import com.hooniegit.Xtream.Modules.Xtream.EventTwo.DataTwo;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-/**
- * <Super> Event Class
- *  : Use HashMap<String, Object> as Reference
- */
-@RequiredArgsConstructor
-@Getter @Setter
 public class Event {
+    private EnumMap<EventType, Object> map = new EnumMap<>(EventType.class);
 
-	// ** <ADD PROPERTIES HERE> **
-    private DataOne dataOne;
-	private DataTwo dataTwo;
+    /**
+     * Get EnumMap Data
+     * @param <T> 
+     * @param type
+     * @return
+     */
+    public <T> T get(EventType type) {
+        return (T) map.get(type);
+    }
+    
+    /**
+     * Set EnumMap Data
+     * @param <T>
+     * @param type
+     * @param value
+     */
+    public <T> void set(EventType type, T value) {
+        map.put(type, value);
+    }
 
 	/**
-	 * Clear Properties
+	 * Clear Data Map
 	 */
 	public void clear() {
-		this.dataOne = null;
-		this.dataTwo = null;
+		this.map = null;
 	}
-
 }

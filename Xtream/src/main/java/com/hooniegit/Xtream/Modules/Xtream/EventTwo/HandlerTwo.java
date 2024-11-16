@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.hooniegit.Xtream.Modules.Xtream.Handler;
 import com.hooniegit.Xtream.Modules.Xtream.Configuration.Event;
+import com.hooniegit.Xtream.Modules.Xtream.Configuration.EventType;
+import com.hooniegit.Xtream.Modules.Xtream.EventOne.ParameterTypeOne;
 
 import lombok.Getter;
 
@@ -20,9 +22,11 @@ public class HandlerTwo extends Handler {
 	 */
 	@Override
     protected void process(Event event) {
-		System.out.println(">> Event 02 Started");
+		System.out.println(">> Event 01 Started");
 
-        List<String> list = event.getDataTwo().getList();
+        List<String> list = event.<DataTwo>get(EventType.ONE).get(ParameterTypeOne.LIST);
+
+		
     }
 
 }

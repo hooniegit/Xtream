@@ -58,16 +58,15 @@ public class Stream {
         disruptor.shutdown();
     }
 
-    // ** <ADD INITIALIZERS HERE> **
     /**
      * Publish Event With Initial Data Map
-     * @param initialData
+     * @param dataOne
      */
     public void publishInitialEvent(DataOne dataOne) {
         long sequence = ringBuffer.next();
         try {
             Event event = ringBuffer.get(sequence);
-            event.setDataOne(dataOne);
+            event.set(EventType.ONE, dataOne);
         } finally {
             ringBuffer.publish(sequence);
         }
@@ -75,13 +74,13 @@ public class Stream {
 
     /**
      * Publish Event With Initial Data Map
-     * @param initialData
+     * @param dataTwo
      */
     public void publishInitialEvent(DataTwo dataTwo) {
         long sequence = ringBuffer.next();
         try {
             Event event = ringBuffer.get(sequence);
-            event.setDataTwo(dataTwo);
+            event.set(EventType.TWO, dataTwo);
         } finally {
             ringBuffer.publish(sequence);
         }
