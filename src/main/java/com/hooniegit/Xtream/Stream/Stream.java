@@ -20,7 +20,7 @@ public class Stream<T> {
 
         disruptor = new Disruptor<>(
                 Event::new,
-                32768,
+                1024,
                 DaemonThreadFactory.INSTANCE,
                 ProducerType.SINGLE,
                 new SleepingWaitStrategy()

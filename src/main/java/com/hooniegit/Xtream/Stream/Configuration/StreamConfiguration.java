@@ -1,13 +1,16 @@
 package com.hooniegit.Xtream.Stream.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.hooniegit.Xtream.Stream.Handler;
 import com.hooniegit.Xtream.Stream.Stream;
 import com.hooniegit.Xtream.Stream.StreamBuilder;
+import com.hooniegit.Xtream.Stream.StreamManager;
 import com.hooniegit.Xtream.Stream.DataClass.Sample;
 import com.hooniegit.Xtream.Stream.Handlers.Handler01;
 import com.hooniegit.Xtream.Stream.Handlers.Handler02;
@@ -23,6 +26,9 @@ import com.hooniegit.Xtream.Stream.Handlers.Handler02;
 @Configuration
 public class StreamConfiguration {
 	
+    @Value("${LMAX.stream.size}") // LMAX 이벤트 처리기 구성 시, Handler 성능 테스트를 통해 최적의 Stream Size를 찾아 적용해야 합니다.
+    private int streamSize;
+
     /**
      * 구성한 핸들러를 기반으로 StreamBuilder 객체를 생성 후 Bean 환경에 등록합니다.
      * @return StreamBuilder 객체
@@ -41,8 +47,23 @@ public class StreamConfiguration {
      * @return List<Stream> 객체
      */
     @Bean
-    public Stream<Sample> stream(StreamBuilder<Sample> streamBuilder) {
-        return streamBuilder.build();
+    public List<Stream<Sample>> streamList(StreamBuilder<Sample> streamBuilder) {
+        List<Stream<Sample>> streamList = new ArrayList<>();
+        for (int i = 0; i < streamSize; i++) {
+            streamList.add(streamBuilder.build());
+        }
+        
+        return streamList;
+    }
+
+    /**
+     * Create StreamManager Bean
+     * @param streamList
+     * @return
+     */
+    @Bean
+    public StreamManager<Sample> streamManager(List<Stream<Sample>> streamList) {
+        return new StreamManager<Sample>(streamList);
     }
 
 }

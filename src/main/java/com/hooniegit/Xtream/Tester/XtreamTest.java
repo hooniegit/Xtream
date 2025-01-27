@@ -3,7 +3,7 @@ package com.hooniegit.Xtream.Tester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hooniegit.Xtream.Stream.Stream;
+import com.hooniegit.Xtream.Stream.StreamManager;
 import com.hooniegit.Xtream.Stream.DataClass.Sample;
 
 import jakarta.annotation.PostConstruct;
@@ -15,11 +15,11 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class XtreamTest {
 
-    private final Stream<Sample> stream;
+    private final StreamManager<Sample> manager;
 
     @Autowired
-    public XtreamTest(Stream<Sample> stream) {
-        this.stream = stream;
+    public XtreamTest(StreamManager<Sample> manager) {
+        this.manager = manager;
     }
 
     @PostConstruct
@@ -27,9 +27,9 @@ public class XtreamTest {
 
         long start = System.nanoTime();
 
-        for (int i=0; i<=400000; i++) {
+        for (int i=0; i<=40000; i++) {
             Sample sample = new Sample(i, "Demo Test is Running..");
-            this.stream.publishInitialEvent(sample);
+            this.manager.getNextStream().publishInitialEvent(sample);
         }
 
         long end = System.nanoTime();
