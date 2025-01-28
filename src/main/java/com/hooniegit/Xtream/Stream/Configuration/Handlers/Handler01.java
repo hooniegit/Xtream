@@ -1,11 +1,11 @@
-package com.hooniegit.Xtream.Stream.Handlers;
+package com.hooniegit.Xtream.Stream.Configuration.Handlers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.hooniegit.Xtream.Stream.Event;
 import com.hooniegit.Xtream.Stream.Handler;
-import com.hooniegit.Xtream.Stream.DataClass.Sample;
+import com.hooniegit.Xtream.Stream.Configuration.DataClass.Sample;
 
 import lombok.Getter;
 

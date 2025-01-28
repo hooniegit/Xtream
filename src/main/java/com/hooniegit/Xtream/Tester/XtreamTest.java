@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hooniegit.Xtream.Stream.StreamManager;
-import com.hooniegit.Xtream.Stream.DataClass.Sample;
+import com.hooniegit.Xtream.Stream.Configuration.DataClass.Sample;
 
 import jakarta.annotation.PostConstruct;
 

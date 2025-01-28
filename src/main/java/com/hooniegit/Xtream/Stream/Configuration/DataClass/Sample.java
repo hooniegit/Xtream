@@ -1,4 +1,4 @@
-package com.hooniegit.Xtream.Stream.DataClass;
+package com.hooniegit.Xtream.Stream.Configuration.DataClass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
