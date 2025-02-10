@@ -2,6 +2,7 @@ package com.hooniegit.Xtream.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,8 @@ public class StreamAutoConfiguration<T> {
      */
     @Bean
     public List<Stream<T>> streamList(StreamBuilder<T> streamBuilder, @Value("${LMAX.stream.size}") int streamSize) {
-        List<Stream<T>> streamList = new ArrayList<>();
+        List<Stream<T>> streamList = new CopyOnWriteArrayList<>();
+        // List<Stream<T>> streamList = new ArrayList<>();
         for (int i = 0; i < streamSize; i++) {
             streamList.add(streamBuilder.build());
         }

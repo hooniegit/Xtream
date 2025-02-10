@@ -4,4 +4,4 @@ spring:
 
 LMAX:
   stream:
-    size: 20
+    size: 12

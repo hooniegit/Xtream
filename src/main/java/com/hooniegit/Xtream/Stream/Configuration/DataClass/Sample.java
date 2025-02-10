@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Sample {
 
-    private Integer id;
     private String value;
     
 }

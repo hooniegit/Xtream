@@ -1,5 +1,7 @@
 package com.hooniegit.Xtream.Tester;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +29,17 @@ public class XtreamTest {
 
         long start = System.nanoTime();
 
-        for (int i=0; i<=40000; i++) {
-            Sample sample = new Sample(i, "Demo Test is Running..");
-            this.manager.getNextStream().publishInitialEvent(sample);
+        for (int i=0; i<=4000000; i++) {
+            CompletableFuture.runAsync(() -> {
+                Sample sample = new Sample("Demo Test is Running..");
+                this.manager.getNextStream().publishInitialEvent(sample);
+            });
+
+            try {
+                Thread.sleep(0, 2);
+            } catch (Exception ex) {
+
+            }
         }
 
         long end = System.nanoTime();
